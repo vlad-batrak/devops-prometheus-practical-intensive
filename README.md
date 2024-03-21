@@ -1,8 +1,9 @@
-# devops-prometheus-practical-intensive
-### Task exercises for Prometheus &amp; GlobalLogic course: "DevOps and Kubernetes. Practical intensive" by Denys Vasyliev
+## devops-prometheus-practical-intensive
+# Task exercises to Prometheus &amp; GlobalLogic course: "DevOps and Kubernetes. Practical intensive" by Denys Vasyliev
 
 #### Task 1: Implement a web service in your own development environment (play a practical task based on the lecturer's demonstration in the "Build, Ship, Run" coding session)
 
+<blockquote>
 <details>
 <summary><b>Details</b></summary>
 
@@ -31,7 +32,9 @@
 - сервіс працює.
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary><b>Useful commands</b></summary>
   
@@ -84,3 +87,4 @@ kubectl set image deploy $APP_NAME $CONTAINER="$IMAGE:$NEW_TAG"
 ##### Check the result on [https://127.0.0.1:8080](http://127.0.0.1:8080/)
 
 </details>
+</blockquote>
