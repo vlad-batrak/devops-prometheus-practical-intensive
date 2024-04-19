@@ -1,7 +1,7 @@
 ## devops-prometheus-practical-intensive
 # Task exercises to Prometheus &amp; GlobalLogic course: "DevOps and Kubernetes. Practical intensive" by Denys Vasyliev
 
-#### Task 1: Implement a web service in your own development environment (play a practical task based on the lecturer's demonstration in the "Build, Ship, Run" coding session)
+#### Task 1.1: Implement a web service in your own development environment (play a practical task based on the lecturer's demonstration in the "Build, Ship, Run" coding session)
 
 <blockquote>
 <details>
@@ -85,6 +85,46 @@ export CONTAINER=<copy container name from previous command!>
 kubectl set image deploy $APP_NAME $CONTAINER="$IMAGE:$NEW_TAG"
 ```
 ##### Check the result on [https://127.0.0.1:8080](http://127.0.0.1:8080/)
+
+</details>
+</blockquote>
+
+---
+
+#### Task 5.1: Extending kubectl (Extending kubectl). Help colleagues complete tasks
+
+<blockquote>
+<details>
+<summary><b>Details</b></summary>
+Завдання:
+
+- Доопрацюйте та виправте помилки скрипта kubeplugin
+- Зробіть рефаторинг коду скрипта
+- Протестуйте скрипт як плагін kubectl
+- Закомітьте скрипт у директорію scripts репозиторію
+- Текстовий вивід статистики з реального кластеру namespace kube-system у форматі: "Resource, Namespace, Name, CPU, Memory"
+- Додайте інструкцію з використання
+
+Код плагіну:
+``` bash
+#!/bin/bash
+
+# Define command-line arguments
+
+RESOURCE_TYPE=$0
+
+# Retrieve resource usage statistics from Kubernetes
+kubectl $2 $RESOURCE_TYPE -n $1 | tail -n +2 | while read line
+do
+  # Extract CPU and memory usage from the output
+  NAME=$(echo $line | awk '{print $1}')
+  CPU=$(echo $line | awk '{print $2}')
+  MEMORY=$(echo $line | awk '{print $3}')
+
+  # Output the statistics to the console
+  # "Resource, Namespace, Name, CPU, Memory"
+done
+```
 
 </details>
 </blockquote>

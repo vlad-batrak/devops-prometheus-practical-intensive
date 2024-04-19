@@ -1,0 +1,64 @@
+#!/bin/bash
+
+function _help() {
+    echo "Kubectl plugin displays CPU and memory usage for nodes or pods resources in the namespace"
+    echo "Usage:"
+    echo "  kubectl kubeplugin [[-h / --help]] [resource_type] [namespace]"
+    echo "Options:"
+    echo "  -h, --help      - Display help message (optional)"
+    echo "  [resource_type] - Specify one of following types: node (no) / pods (pod, po)"
+    echo '  [namespace]     - Specify the namespace <default="kube-system"'
+    exit 0
+}
+
+if [[ $# == 0 || $1 == "-h" || $1 == "--help" ]]; then
+	_help
+	exit 0
+fi
+
+if [[ $1 == "version" ]]; then
+	echo "1.0.0"
+	exit 0
+fi
+
+if [[ $1 == "config" ]]; then
+    echo "$KUBECONFIG"
+    exit 0
+fi
+
+if [[ $1 != "node" && $1 != "no" && $1 != "pods" && $1 != "pod" && $1 != "po" ]]; then
+	echo "WARNING: Wrong specification type of the resource!!!"
+	_help
+	exit 2
+fi
+
+
+# Define command-line arguments
+RESOURCE_TYPE=$1
+
+DEFAULT_NS="kube-system"
+NAMESPACE=${2:-$DEFAULT_NS}
+
+
+printf '%-7s %-23s %-50s %-10s %-10s\n' 'Resource' 'Namespace' 'Name' 'CPU' 'Memory'
+printf '%100s\n' '' | tr ' ' -
+
+# Retrieve resource usage statistics from Kubernetes
+kubectl top $RESOURCE_TYPE -n $NAMESPACE  | tail -n +2 | while read line
+do
+  # Extract CPU and memory usage from the output
+  NAME=$(echo $line | awk '{print $1}')
+  if [[ $RESOURCE_TYPE == "node" || $RESOURCE_TYPE == "no" ]]; then
+	CPU=$(echo $line | awk '{print $2 "/" $3}')
+  	MEMORY=$(echo $line | awk '{print $4 "/" $5}')
+  else 
+	CPU=$(echo $line | awk '{print $2}')
+	MEMORY=$(echo $line | awk '{print $3}')
+  fi
+
+  # Output the statistics to the console
+  # "Resource, Namespace, Name, CPU, Memory"
+  printf '%-7s %-23s %-50s %-10s %-10s\n' $RESOURCE_TYPE $NAMESPACE $NAME $CPU $MEMORY 
+
+done
+exit 0
