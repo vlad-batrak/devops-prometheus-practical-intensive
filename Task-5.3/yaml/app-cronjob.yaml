@@ -1,0 +1,18 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: app-cronjob
+spec:
+  schedule: "*/5 * * * *"  # Run every 5 minutes
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: hello
+        spec:
+          containers:
+          - name: hello
+            image: bash
+            command: ["bash", "-c", "echo 'Hello world'"]
+          restartPolicy: OnFailure

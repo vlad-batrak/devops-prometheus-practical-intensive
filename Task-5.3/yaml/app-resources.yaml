@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-resource
+  labels:
+    app: app
+spec:
+  containers:
+  - name: app-container
+    image: gcr.io/kuar-demo/kuard-amd64:1
+    ports:
+    - containerPort: 8080
+      name: http
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "100m"
+        memory: "256Mi"
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 8080
+    readinessProbe:
+      httpGet:
+        path: /healthz
+        port: 8080

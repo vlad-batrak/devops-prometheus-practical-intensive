@@ -128,3 +128,24 @@ done
 
 </details>
 </blockquote>
+
+#### Task 5.3: Examples of prompt engineering solutions for kubernetes deployment
+
+<blockquote>
+<details>
+<summary><b>Details</b></summary>
+
+Створить портфоліо власних промтів англійською мовою для маніфестів із списку (Приклад: [https://github.com/den-vasyliev/go-demo-app/tree/master/yaml](https://github.com/den-vasyliev/go-demo-app/tree/master/yaml)):
+
+- app.yaml
+- app-livenessProbe.yaml
+- app-readinessProbe.yaml
+- app-volumeMounts.yaml
+- app-cronjob.yaml
+- app-job.yaml
+- app-multicontainer.yaml
+- app-resources.yaml
+- app-secret-env.yaml
+
+</details>
+</blockquote>
