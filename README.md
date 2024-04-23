@@ -34,61 +34,6 @@
 </details>
 </blockquote>
 
-<blockquote>
-<details>
-<summary><b>Useful commands</b></summary>
-  
-##### Deploy first version of an application
-
-```bash
-export IMAGE=<image_name or DockerHub repository>
-export TAG=<tag or image version>
-export NEW_TAG=<new image version>
-export APP_NAME=<application name>
-```
-
-```bash
-# Build docker image
-docker build . -t "$IMAGE:$TAG"
-
-# Push image on DockerHub
-docker push "$IMAGE:$TAG"
-```
-
-```bash
-# Deploy application
-kubectl create deploy $APP_NAME --image "$IMAGE:$TAG"
-
-# List all pods in ps output format with more information (such as node name)
-kubectl get pods -o wide
-
-# Get real-time monitoring of pods changing
-kubectl get pods -w
-
-# Forwarding claster port to workstation. (Make it in an another terminal)
-kubectl port-forward deploy/$APP_NAME 8080
-```
-
-##### Check the result on [https://127.0.0.1:8080](http://127.0.0.1:8080/)
-
-##### Redeploy new version of the application
-
-```bash
-# Get information about running deployment
-kubectl get deploy $APP_NAME -o wide
-```
-
-```bash
-export CONTAINER=<copy container name from previous command!>
-
-# Redeploy new version
-kubectl set image deploy $APP_NAME $CONTAINER="$IMAGE:$NEW_TAG"
-```
-##### Check the result on [https://127.0.0.1:8080](http://127.0.0.1:8080/)
-
-</details>
-</blockquote>
-
 ---
 
 #### Task 5.1: Extending kubectl (Extending kubectl). Help colleagues complete tasks
@@ -128,6 +73,47 @@ done
 
 </details>
 </blockquote>
+---
+
+#### Task 5.2: Monitoring and Blue-Green vs Canary Deployment
+
+<blockquote>
+<details>
+<summary><b>Details</b></summary>
+
+Завдання 1 
+
+1. Розгорніть Kubernetes кластер на Google Cloud за допомогою gcloud cli
+
+2. Після отримання доступу до кластеру, створіть deployment v1.0.0 що повертає версію “Version: 1.0.0”
+
+3. Налаштуйте сервіс типу LoadBalancer та отримайте IP-адресу
+
+4. Налаштуйте Monitor Type Keyword у Uptime Robot вказавши IP-адресу балансера та Keyword “Version: 1.0.0”
+
+5. Моніторингова система перевірить в реальному часі доступність першої версії
+
+6. Налаштуйте публічну status page додавши до неї перший Monitoring
+
+Завдання 2
+
+7. Наступним кроком внесіть зміни у програму, збілдайте та запуште нову версію контейнеру у контейнер реєстр
+
+8. Створить новий деплоймент з версію образу v2.0.0
+
+9. Переведіть трафік з першої на другу версію методами: Canary (25%) та Blue-Green (100%) Deployment
+
+10. По завершенню тестування, залишіть активною v2.0.0 на 100%
+
+11. Налаштуйте Monitor Type Keyword у Uptime Robot вказавши IP-адресу балансера та Keyword “Version: 2.0.0”
+
+12. Моніторингова система перевірить в реальному часі доступність другої версії
+
+13. Налаштуйте публічну status page додавши до неї другий Monitoring
+
+</details>
+</blockquote>
+---
 
 #### Task 5.3: Examples of prompt engineering solutions for kubernetes deployment
 
